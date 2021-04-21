@@ -1,0 +1,10 @@
+#!/bin/sh
+
+ROOT_PATH='/home/brunomiguel/Documents/data/BIDS/sub*'
+
+for sub in $ROOT_PATH;
+do
+  ROOT_SUBJECT=$sub/ses-001;
+  filename=$ROOT_SUBJECT/anat/*T1w.nii.gz
+  bet $filename ${filename}_brain
+done

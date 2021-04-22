@@ -1,0 +1,24 @@
+#!/bin/sh
+
+ROOT_PATH='/home/brunomiguel/Documents/data/BIDS/sub*'
+
+for sub in $ROOT_PATH
+do
+  ROOT_SUBJECT=$sub/ses-001;
+  ROOT_FUNC=${ROOT_SUBJECT}/func/
+
+  # itereate through functiona runs
+
+  # TODO
+
+  fnpath_anat=${ROOT_ANAT}*T1w.nii.gz
+  fn_anat="$(basename -- $fnpath_anat)"
+  fn_noext=$(echo $fn_anat | cut -f 1 -d '.')
+  fnpath_anat_bet=${ROOT_ANAT}${fn_noext}_brain
+
+  echo $fnpath_anat
+  echo $fnpath_anat_bet
+
+  fsl_anat -i $fnpath_anat
+
+done

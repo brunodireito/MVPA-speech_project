@@ -1,0 +1,31 @@
+#!/bin/sh
+
+BASE_CODE='/Users/home/Documents/GitHub/MVPA-speech_project/bids-preprocessing'
+BASE_DATA='/Users/home/Documents/BIDS/sub*'
+
+for subj in $BASE_DATA
+do
+  BASE_SUBJECT=$subj/ses-001
+  echo $BASE_SUBJECT
+
+  s_idx="$(basename -- $subj)"
+  echo $s_idx
+
+  # change to subject folder.
+  cd $BASE_SUBJECT
+
+  # Copy the design files into the subject directory, and then
+  # change “sub-related-data” to the current subject number
+  cp ${BASE_CODE}/design.fsf .
+
+  # Note that we are using the | character to delimit the patterns
+  # instead of the usual / character because there are / characters
+  # in the pattern.
+  sed -i '' "s|sub-000|${s_idx}|g" design.fsf
+
+  feat design.fsf
+
+  cd $BASE_CODE
+done
+
+echo

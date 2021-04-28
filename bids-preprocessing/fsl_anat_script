@@ -4,7 +4,7 @@ ROOT_PATH='/home/brunomiguel/Documents/data/BIDS/sub*'
 
 for sub in $ROOT_PATH
 do
-  ROOT_SUBJECT=$sub/ses-001;
+  ROOT_SUBJECT=$sub/ses-001
   ROOT_ANAT=${ROOT_SUBJECT}/anat/
 
   fnpath_anat=${ROOT_ANAT}*T1w.nii.gz

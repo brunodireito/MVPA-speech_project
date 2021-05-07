@@ -1,0 +1,34 @@
+#!/bin/sh
+
+BASE_CODE='/home/brunomiguel/Documents/GitHub/MVPA-speech_project/bids-preprocessing'
+BASE_DATA='/home/brunomiguel/Documents/data/BIDS/sub-*'
+
+for subj in $BASE_DATA
+do
+  BASE_SUBJECT=$subj/ses-001
+  echo ${BASE_SUBJECT}
+
+
+  s_idx="$(basename -- $subj)"
+  echo "Processing subject " $s_idx
+
+  # change to subject folder.
+  cd $BASE_SUBJECT
+
+  # Copy the design files into the subject directory, and then
+  # change “sub-related-data” to the current subject number
+  cp ${BASE_CODE}/fsl-designs/design_task-nomeacaoinner.fsf .
+  chmod 777 design_task-nomeacaoinner.fsf
+
+  # Note that we are using the | character to delimit the patterns
+  # instead of the usual / character because there are / characters
+  # in the pattern.
+  sed -i "s|sub-0001|${s_idx}|g" design_task-nomeacaoinner.fsf
+
+  feat design_task-nomeacaoinner.fsf
+
+  cd $BASE_CODE
+
+done
+
+echo

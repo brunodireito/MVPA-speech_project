@@ -1,0 +1,19 @@
+#!/bin/sh
+ROOT_PATH='/home/brunomiguel/Documents/data/BIDS/sub*'
+
+for sub in $ROOT_PATH
+do
+  ROOT_SUBJECT=$sub/ses-001;
+  ROOT_FUNC=${ROOT_SUBJECT}/task-nomeacaoinner_run-1.feat
+
+  fnpath_func_NATIVE=${ROOT_FUNC}/filtered_func_data.nii.gz
+  fnpath_func_MNI=/usr/local/fsl/data/standard/MNI152_T1_2mm_brain.nii.gz
+  warp_func_MNI=${ROOT_FUNC}/reg/example_func2standard.mat
+
+  flirt -in $fnpath_func_NATIVE \
+        -ref $fnpath_func_MNI \
+        -out $ROOT_FUNC/func_data_MNI.nii.gz \
+        -init $warp_func_MNI \
+        -applyxfm
+
+done

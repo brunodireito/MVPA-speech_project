@@ -8,6 +8,7 @@ do
   BASE_SUBJECT=$subj/ses-001
   echo ${BASE_SUBJECT}
 
+
   s_idx="$(basename -- $subj)"
   echo "Processing subject " $s_idx
 
@@ -16,17 +17,17 @@ do
 
   # Copy the design files into the subject directory, and then
   # change “sub-related-data” to the current subject number
-  cp ${BASE_CODE}/fsl-designs/design_task-nomeacaoinner_vswp_run2.fsf .
-  chmod 777 design_task-nomeacaoinner_vswp_run2.fsf
+  cp ${BASE_CODE}/fsl-designs/design_task-nomeacaoinner_vswp_run3.fsf .
+  chmod 777 design_task-nomeacaoinner_vswp_run3.fsf
 
-  echo "Processing file " ${BASE_CODE}/fsl-designs/design_task-nomeacaoinner_vswp_run2.fsf
+  echo "Processing file " ${BASE_CODE}/fsl-designs/design_task-nomeacaoinner_vswp_run3.fsf
 
   # Note that we are using the | character to delimit the patterns
   # instead of the usual / character because there are / characters
   # in the pattern.
-  sed -i "s|sub-0001|${s_idx}|g" design_task-nomeacaoinner_vswp_run2.fsf
+  sed -i "s|sub-0001|${s_idx}|g" design_task-nomeacaoinner_vswp_run3.fsf
 
-  feat design_task-nomeacaoinner_vswp_run2.fsf
+  feat design_task-nomeacaoinner_vswp_run3.fsf
 
   cd $BASE_CODE
 

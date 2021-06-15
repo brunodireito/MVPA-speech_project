@@ -7,6 +7,7 @@ from nilearn.image import index_img
 from nilearn.glm.first_level import make_first_level_design_matrix
 from nilearn.plotting import plot_design_matrix
 
+from timeit import default_timer as timer
 
 import numpy as np
 import pandas as pd
@@ -19,7 +20,7 @@ ROOT_DATA='/Users/home/Documents/BIDS/'
 SUB='sub-0001'
 SES='ses-001'
 TASK='innerspeech'
-RUN='run-02'
+RUN='run-03'
 
 
 # data folder
@@ -38,9 +39,9 @@ brain_mask= nilearn.image.load_img(mask_fn)
 bs_fn=os.path.join( SUB + '_' + SES + '_task-' + TASK + '_'+ RUN +'_bold_bs.nii.gz')
 bs_maps= nilearn.image.load_img(bs_fn)
 
-
 # Load labels
-labels=np.genfromtxt('labels.csv',dtype='str')
+labels_fn=os.path.join( SUB + '_' + SES + '_task-' + TASK + '_'+ RUN +'_labels.csv')
+labels=np.genfromtxt(labels_fn,dtype='str')
 
 
 # Decoding
@@ -48,9 +49,17 @@ from sklearn.model_selection import KFold
 from nilearn.decoding import Decoder 
 
 decoder = Decoder(estimator='svc',cv=3, mask=brain_mask, standardize=True)
+
+start = timer()
+
 decoder.fit(bs_maps, labels)
 
-for i, (param, cv_score) in enumerate(zip(decoder.cv_params_,
-                                          decoder.cv_scores_)):
-    with open('results.txt', 'w') as f:
-        print("Fold %d | Best SVM parameter: %.1f with score: %.3f" % (i + 1, param, cv_score),file=f)
+end = timer()
+
+print('time in seconds %.3f.', end-start) # Time in seconds, e.g. 5.38091952400282
+
+
+with open('results.txt', 'a+') as f:
+    print(bs_fn,file=f)
+    print(decoder.cv_scores_,file=f)
+    

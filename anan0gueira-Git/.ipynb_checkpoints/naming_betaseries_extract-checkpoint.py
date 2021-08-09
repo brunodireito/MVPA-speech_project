@@ -23,11 +23,12 @@ import os
 ROOT_DATA=r"C:\Users\bdireito\Desktop\Data\DATA_ananogueira\func"
 #ROOT_DATA='/home/brunomiguel/Documents/data/BIDS/'
 
-SUB='sub-0001'
+SUB='sub-0002'
 
 SES='ses-001'
 
 TASK='nomeacaoovert'
+TASK='nomeacaoinner'
 
 RUN='run-01'
 
